@@ -7,11 +7,11 @@ from js import (
     Uint8Array,
     URL
 )
-from pydem.messages import ProtocolVersion
 
 
-def set_error(msg):
-    document.getElementById("message").innerHTML = f"ERROR: {msg}"
+class UserError(Exception):
+    def __init__(self, msg):
+        self.msg = msg
 
 
 async def upload_files(id_):
@@ -27,12 +27,23 @@ async def upload_files(id_):
 
 async def get_base_file():
     files = await upload_files("baseDemInput")
+
     if len(files) == 0:
-        set_error("Please select a base DEM file")
-    elif len(files) > 1:
-        set_error("Please select only one base DEM file")
-    else:
-        return files[0]
+        raise UserError("Please select a base demo file")
+
+    if len(files) > 1:
+        raise UserError("Please select only one base DEM file")
+
+    return files[0]
+
+
+async def get_other_files():
+    files = await upload_files("otherDemsInput")
+
+    if len(files) == 0:
+        raise UserError("Please select at least one non-base DEM file")
+
+    return files
 
 
 def download_file(f, fname):
@@ -49,8 +60,16 @@ def download_file(f, fname):
 
 
 async def run_superimpose(event):
-    base_file = await get_base_file()
+    try:
+        set_names = document.querySelector('input[name="setNames"][value="yes"]').checked
 
-    out_f = io.BytesIO(b'!!!' + base_file.read() + b'!!!')
+        base_file = await get_base_file()
+        other_files = await get_other_files()
 
-    download_file(out_f, 'out.dem')
+        out_file = io.BytesIO()
+        for other_file in other_files:
+            out_file.write(other_file.read())
+
+        download_file(out_file, 'out.dem')
+    except UserError as e:
+        document.getElementById("message").innerHTML = f"ERROR: {e.msg}"
