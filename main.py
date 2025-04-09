@@ -2,7 +2,6 @@ import io
 
 import demsuperimpose
 from js import (
-    console,
     document,
     File,
     Uint8Array,
@@ -17,7 +16,6 @@ class UserError(Exception):
 
 async def upload_files(id_):
     input_ = document.getElementById(id_)
-    console.log(str(input_.files))
 
     out = []
     for file in input_.files:

@@ -16,16 +16,20 @@
       <input type="radio" name="setNames" value="no"> No, do not set names
     </p>
 
-    <p>Select the *base* .dem file:</p>
+    <p>1. Select the *base* .dem file:</p>
     <input type="file" id="baseDemInput" accept=".dem" />
 
-    <p>Select one or more .dem files to superimpose:</p>
+    <p>2. Select one or more .dem files to superimpose:</p>
     <input type="file" id="otherDemsInput" accept=".dem" multiple/>
 
+    <p>3. Process and download output .dem file:</p>
     <button py-click="run_superimpose">Run Superimpose</button>
 
     <p id="message"></p>
 
     <script type="py" src="./main.py" config="./pyscript.json"></script>
+
+    <h2>credits</h2>
+    <a href="https://github.com/kugelrund/pydem">pydem</a>: Used to parse and rebuild demo files.
   </body>
 </html>
