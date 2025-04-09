@@ -1,5 +1,6 @@
 import io
 
+import demsuperimpose
 from js import (
     console,
     document,
@@ -61,15 +62,18 @@ def download_file(f, fname):
 
 async def run_superimpose(event):
     try:
-        set_names = document.querySelector('input[name="setNames"][value="yes"]').checked
+        set_names = document.querySelector(
+            'input[name="setNames"][value="yes"]'
+        ).checked
 
-        base_file = await get_base_file()
-        other_files = await get_other_files()
+        base_dem_file = await get_base_file()
+        other_dem_files = await get_other_files()
 
-        out_file = io.BytesIO()
-        for other_file in other_files:
-            out_file.write(other_file.read())
+        out_dem_file = io.BytesIO()
+        demsuperimpose.superimpose(
+            base_dem_file, other_dem_files, out_dem_file, set_names
+        )
 
-        download_file(out_file, 'out.dem')
+        download_file(out_dem_file, 'out.dem')
     except UserError as e:
         document.getElementById("message").innerHTML = f"ERROR: {e.msg}"
