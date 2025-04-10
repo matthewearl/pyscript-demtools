@@ -6,6 +6,8 @@ pages = [
     ("index.html", "index.html", None, None),
     ("superimpose.html", "superimpose.html", "superimpose",
      "add players from other demos into a base demo"),
+    ("showros.html", "showros.html", "showros",
+     "unhide players with Ring of Shadows"),
 ]
 
 tools = [

@@ -27,26 +27,17 @@
   <body>
       <h1><a href="/">demtools</a></h1>
 	  
-		<h2>superimpose</h2>
+		<h2>showros</h2>
 	  
 	  
-        add players from other demos into a base demo
+        unhide players with Ring of Shadows
 	  
       
-  <p>1. Set names?</p>
-  <p>
-    <input type="radio" name="setNames" value="yes" checked> Yes
-    <input type="radio" name="setNames" value="no"> No
-  </p>
+  <p>1. Select the input .dem file:</p>
+  <input type="file" id="demInput" accept=".dem" />
 
-  <p>2. Select the base .dem file:</p>
-  <input type="file" id="baseDemInput" accept=".dem" />
-
-  <p>3. Select one or more .dem files to superimpose:</p>
-  <input type="file" id="otherDemsInput" accept=".dem" multiple/>
-
-  <p>4. Process and download output .dem file:</p>
-  <button py-click="run_superimpose">Run superimpose</button>
+  <p>2. Process and download output .dem file:</p>
+  <button py-click="run_showros">Run showros</button>
 
   <script type="py" src="./main.py" config="./pyscript.json"></script>
   <h3>log</h3>

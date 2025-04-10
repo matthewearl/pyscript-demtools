@@ -2,6 +2,7 @@ import io
 import logging
 
 import demsuperimpose
+import showros
 from js import (
     document,
     File,
@@ -88,6 +89,7 @@ def setup_logging():
 
     document.getElementById("log-box").value = ""
 
+
 async def run_superimpose(event):
     try:
         set_names = document.querySelector(
@@ -105,6 +107,24 @@ async def run_superimpose(event):
         download_file(out_dem_file, 'out.dem')
     except UserError as e:
         logger.error("user error: %s", e.msg)
+
+
+async def run_showros(event):
+    try:
+        files = await upload_files("demInput")
+        if len(files) == 0:
+            raise UserError("Please select a base demo file")
+        if len(files) > 1:
+            raise UserError("Please select only one base DEM file")
+        in_dem_file = files[0]
+
+        out_dem_file = io.BytesIO()
+        showros.show_ros(in_dem_file, out_dem_file, None)
+
+        download_file(out_dem_file, 'out.dem')
+    except UserError as e:
+        logger.error("user error: %s", e.msg)
+
 
 setup_logging()
 logger.info('ready!')

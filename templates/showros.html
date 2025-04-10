@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+  <p>1. Select the input .dem file:</p>
+  <input type="file" id="demInput" accept=".dem" />
+
+  <p>2. Process and download output .dem file:</p>
+  <button py-click="run_showros">Run showros</button>
+
+  <script type="py" src="./main.py" config="./pyscript.json"></script>
+  {% include "_footer.html" %}
+{% endblock %}
