@@ -1,4 +1,5 @@
 import io
+import logging
 
 import demsuperimpose
 from js import (
@@ -7,6 +8,21 @@ from js import (
     Uint8Array,
     URL
 )
+
+
+logger = logging.getLogger(__name__)
+
+
+class HTMLTextAreaHandler(logging.Handler):
+    def __init__(self, element_id):
+        super().__init__()
+        self._element_id = element_id
+
+    def emit(self, record):
+        msg = self.format(record)
+        textarea = document.getElementById(self._element_id)
+        textarea.value += msg + '\n'
+        textarea.scrollTop = textarea.scrollHeight
 
 
 class UserError(Exception):
@@ -58,6 +74,20 @@ def download_file(f, fname):
     hidden_link.click()
 
 
+def setup_logging():
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    logger.handlers.clear()
+    html_handler = HTMLTextAreaHandler("log-box")
+    html_handler.setFormatter(
+        logging.Formatter(
+            '%(asctime)s %(levelname)s %(name)s: %(message)s'
+        )
+    )
+    logger.addHandler(html_handler)
+
+    document.getElementById("log-box").value = ""
+
 async def run_superimpose(event):
     try:
         set_names = document.querySelector(
@@ -74,4 +104,7 @@ async def run_superimpose(event):
 
         download_file(out_dem_file, 'out.dem')
     except UserError as e:
-        document.getElementById("message").innerHTML = f"ERROR: {e.msg}"
+        logger.error("user error: %s", e.msg)
+
+setup_logging()
+logger.info('ready!')

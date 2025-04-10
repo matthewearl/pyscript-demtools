@@ -17,7 +17,7 @@
       <input type="radio" name="setNames" value="no"> No, do not set names
     </p>
 
-    <p>1. Select the *base* .dem file:</p>
+    <p>1. Select the base .dem file:</p>
     <input type="file" id="baseDemInput" accept=".dem" />
 
     <p>2. Select one or more .dem files to superimpose:</p>
@@ -26,11 +26,24 @@
     <p>3. Process and download output .dem file:</p>
     <button py-click="run_superimpose">Run Superimpose</button>
 
-    <p id="message"></p>
-
     <script type="py" src="./main.py" config="./pyscript.json"></script>
 
+    <h2>log</h2>
+
+    <textarea id="log-box" rows="10" cols="80" readonly></textarea>
+
     <h2>credits</h2>
-    <a href="https://github.com/kugelrund/pydem">pydem</a>: Used to parse and rebuild demo files.
+    <p>
+    <a href="https://github.com/kugelrund/pydem">pydem</a>:
+    Used to parse and rebuild demo files.
+    </p>
+
+    <p>
+      See
+      <a href="https://github.com/matthewearl/pyscript-demtools/blob/master/README.md">
+        README
+      </a>
+      for licensing information.
+    </p>
   </body>
 </html>
