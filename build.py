@@ -3,12 +3,22 @@ from jinja2 import Environment, FileSystemLoader
 env = Environment(loader=FileSystemLoader("templates"))
 
 pages = [
-    ("index.html", "index.html", "demtools"),
-    ("superimpose.html", "superimpose.html", "demsuperimpose"),
+    ("index.html", "index.html", None, None),
+    ("superimpose.html", "superimpose.html", "superimpose",
+     "add players from other demos into a base demo"),
 ]
 
-for template_name, output_path, page_title in pages:
+tools = [
+    {"output_path": output_path, "title": title, "desc": desc}
+    for _, output_path, title, desc in pages
+    if desc
+]
+
+for template_name, output_path, title, desc in pages:
     template = env.get_template(template_name)
-    html = template.render(title=page_title)
+    if template_name == "index.html":
+        html = template.render(tools=tools)
+    else:
+        html = template.render(title=title, desc=desc)
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html)

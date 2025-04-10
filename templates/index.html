@@ -2,6 +2,11 @@
 {% block content %}
   <p>Select a tool:</p>
   <ul>
-    <li><a href="superimpose.html">superimpose</a></li>
+    {% for tool in tools %}
+      <li>
+        <a href="{{ tool.output_path }}">{{ tool.title }}</a> –
+        {{ tool.desc }}
+      </li>
+    {% endfor %}
   </ul>
 {% endblock %}
