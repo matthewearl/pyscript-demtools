@@ -2,6 +2,7 @@
     "packages": [
         "./pydem-0.0.0-py3-none-any.whl",
         "./demsuperimpose-0.0.0-py3-none-any.whl",
-        "./showros-0.0.0-py3-none-any.whl"
+        "./showros-0.0.0-py3-none-any.whl",
+        "./demtext-0.0.0-py3-none-any.whl"
     ]
 }

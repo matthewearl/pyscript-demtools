@@ -27,27 +27,42 @@
   <body>
       <h1><a href="/">demtools</a></h1>
 	  
+		<h2>demtext</h2>
+	  
+	  
+        generate a text file for a demo
 	  
       
-  <p>Select a tool:</p>
-  <ul>
-    
-      <li>
-        <a href="superimpose.html">superimpose</a> –
-        add players from other demos into a base demo
-      </li>
-    
-      <li>
-        <a href="showros.html">showros</a> –
-        unhide players with Ring of Shadows
-      </li>
-    
-      <li>
-        <a href="demtext.html">demtext</a> –
-        generate a text file for a demo
-      </li>
-    
-  </ul>
+  <p>1. Select the input .dem file:</p>
+  <input type="file" id="demInput" accept=".dem" />
+
+  <p>2. Generate the text:</p>
+  <button py-click="run_demtext">Run demtext</button>
+
+  <p>3. Modify the text:</p>
+  <textarea style="font-family: monospace;" id="demtext-box" rows="10" cols="80"></textarea>
+
+  <p>4. Download the text file:</p>
+  <button py-click="download_demtext">Download</button>
+
+  <script type="py" src="./main.py" config="./pyscript.json"></script>
+  <h3>log</h3>
+
+<textarea id="log-box" rows="10" cols="80" readonly></textarea>
+
+<h3>credits</h3>
+<p>
+<a href="https://github.com/kugelrund/pydem">pydem</a>:
+Used to parse and rebuild demo files.
+</p>
+
+<p>
+  See
+  <a href="https://github.com/matthewearl/pyscript-demtools/blob/master/README.md">
+    README
+  </a>
+  for licensing information.
+</p>
 
   </body>
 </html>

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+  <p>1. Select the input .dem file:</p>
+  <input type="file" id="demInput" accept=".dem" />
+
+  <p>2. Generate the text:</p>
+  <button py-click="run_demtext">Run demtext</button>
+
+  <p>3. Modify the text:</p>
+  <textarea style="font-family: monospace;" id="demtext-box" rows="10" cols="80"></textarea>
+
+  <p>4. Download the text file:</p>
+  <button py-click="download_demtext">Download</button>
+
+  <script type="py" src="./main.py" config="./pyscript.json"></script>
+  {% include "_footer.html" %}
+{% endblock %}

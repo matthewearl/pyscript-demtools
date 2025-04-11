@@ -1,7 +1,10 @@
+import datetime
+import functools
 import io
 import logging
 
 import demsuperimpose
+import demtext
 import showros
 from js import (
     document,
@@ -52,6 +55,14 @@ async def get_base_file():
 
     return files[0]
 
+async def get_in_dem_file():
+    files = await upload_files("demInput")
+    if len(files) == 0:
+        raise UserError("Please select a demo file")
+    if len(files) > 1:
+        raise UserError("Please select only one demo file")
+    return files[0]
+
 
 async def get_other_files():
     files = await upload_files("otherDemsInput")
@@ -90,40 +101,57 @@ def setup_logging():
     document.getElementById("log-box").value = ""
 
 
+def catch_user_error(f):
+    @functools.wraps(f)
+    def wrapped(*args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except UserError as e:
+            logger.error("user error: %s", e.msg)
+    return wrapped
+
+
+@catch_user_error
 async def run_superimpose(event):
-    try:
-        set_names = document.querySelector(
-            'input[name="setNames"][value="yes"]'
-        ).checked
+    set_names = document.querySelector(
+        'input[name="setNames"][value="yes"]'
+    ).checked
 
-        base_dem_file = await get_base_file()
-        other_dem_files = await get_other_files()
+    base_dem_file = await get_base_file()
+    other_dem_files = await get_other_files()
 
-        out_dem_file = io.BytesIO()
-        demsuperimpose.superimpose(
-            base_dem_file, other_dem_files, out_dem_file, set_names
-        )
+    out_dem_file = io.BytesIO()
+    demsuperimpose.superimpose(
+        base_dem_file, other_dem_files, out_dem_file, set_names
+    )
 
-        download_file(out_dem_file, 'out.dem')
-    except UserError as e:
-        logger.error("user error: %s", e.msg)
+    download_file(out_dem_file, 'out.dem')
 
 
+@catch_user_error
 async def run_showros(event):
-    try:
-        files = await upload_files("demInput")
-        if len(files) == 0:
-            raise UserError("Please select a base demo file")
-        if len(files) > 1:
-            raise UserError("Please select only one base DEM file")
-        in_dem_file = files[0]
+    in_dem_file = await get_in_dem_file()
+    out_dem_file = io.BytesIO()
+    showros.show_ros(in_dem_file, out_dem_file, None)
 
-        out_dem_file = io.BytesIO()
-        showros.show_ros(in_dem_file, out_dem_file, None)
+    download_file(out_dem_file, 'out.dem')
 
-        download_file(out_dem_file, 'out.dem')
-    except UserError as e:
-        logger.error("user error: %s", e.msg)
+
+@catch_user_error
+async def run_demtext(event):
+    in_dem_file = await get_in_dem_file()
+    text = demtext.demtext(in_dem_file, datetime.date.today())
+    textarea = document.getElementById("demtext-box")
+    textarea.value = text
+
+
+@catch_user_error
+async def download_demtext(event):
+    text = document.getElementById("demtext-box").value
+    download_file(
+        io.BytesIO(text.encode('utf-8')),
+        'out.txt'
+    )
 
 
 setup_logging()

@@ -8,6 +8,8 @@ pages = [
      "add players from other demos into a base demo"),
     ("showros.html", "showros.html", "showros",
      "unhide players with Ring of Shadows"),
+    ("demtext.html", "demtext.html", "demtext",
+     "generate a text file for a demo"),
 ]
 
 tools = [
