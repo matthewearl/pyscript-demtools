@@ -113,9 +113,7 @@ def catch_user_error(f):
 
 @catch_user_error
 async def run_superimpose(event):
-    set_names = document.querySelector(
-        'input[name="setNames"][value="yes"]'
-    ).checked
+    set_names = document.getElementById('setNames').checked
 
     base_dem_file = await get_base_file()
     other_dem_files = await get_other_files()

@@ -1,19 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
-  <p>1. Set names?</p>
-  <p>
-    <input type="radio" name="setNames" value="yes" checked> Yes
-    <input type="radio" name="setNames" value="no"> No
-  </p>
+  <fieldset>
+    <legend>1. Set names</legend>
+    <label>Set names and colors of superimposed players
+      <input checked type="checkbox" id="setNames">
+    </label>
+  </fieldset>
 
-  <p>2. Select the base .dem file:</p>
-  <input type="file" id="baseDemInput" accept=".dem" />
+  <fieldset>
+    <legend>2. Select the base .dem file</legend>
+    <input type="file" id="baseDemInput" accept=".dem" />
+  </fieldset>
 
-  <p>3. Select one or more .dem files to superimpose:</p>
-  <input type="file" id="otherDemsInput" accept=".dem" multiple/>
+  <fieldset>
+    <legend>3. Select one or more .dem files to superimpose</legend>
+    <input type="file" id="otherDemsInput" accept=".dem" multiple/>
+  </fieldset>
 
-  <p>4. Process and download output .dem file:</p>
-  <button py-click="run_superimpose">Run superimpose</button>
+  <fieldset>
+    <legend>4. Process and download output .dem file</legend>
+    <button py-click="run_superimpose">Run superimpose</button>
+  </fieldset>
 
   <script type="py" src="./main.py" config="./pyscript.json"></script>
   {% include "_footer.html" %}

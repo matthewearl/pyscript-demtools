@@ -1,16 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-  <p>1. Select the input .dem file:</p>
-  <input type="file" id="demInput" accept=".dem" />
+  <fieldset>
+    <legend>1. Select the input .dem file</legend>
+    <input type="file" id="demInput" accept=".dem" />
+  </fieldset>
 
-  <p>2. Generate the text:</p>
-  <button py-click="run_demtext">Run demtext</button>
+  <fieldset>
+    <legend>2. Generate the text</legend>
+    <button py-click="run_demtext">Run demtext</button>
+  </fieldset>
 
-  <p>3. Modify the text:</p>
-  <textarea style="font-family: monospace;" id="demtext-box" rows="10" cols="80"></textarea>
+  <fieldset>
+    <legend>3. Modify the text</legend>
+    <textarea style="font-family: monospace;" id="demtext-box" rows="10" cols="80"></textarea>
+  </fieldset>
 
-  <p>4. Download the text file:</p>
-  <button py-click="download_demtext">Download</button>
+  <fieldset>
+    <legend>4. Download the text file</legend>
+    <button py-click="download_demtext">Download</button>
+  </fieldset>
 
   <script type="py" src="./main.py" config="./pyscript.json"></script>
   {% include "_footer.html" %}
