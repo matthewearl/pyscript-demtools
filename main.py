@@ -132,7 +132,21 @@ async def run_superimpose(event):
 async def run_showros(event):
     in_dem_file = await get_in_dem_file()
     out_dem_file = io.BytesIO()
-    showros.show_ros(in_dem_file, out_dem_file, None)
+
+    checkbox = document.getElementById('changeViewEntity')
+
+    if checkbox.checked:
+        entity_num = None
+    else:
+        entity_num_input = document.getElementById('entityNum')
+        try:
+            entity_num = int(entity_num_input.value)
+        except ValueError:
+            raise UserError('Entity num must be an integer')
+        if entity_num <= 0:
+            raise UserError('Entity num must be greater than zero')
+
+    showros.show_ros(in_dem_file, out_dem_file, entity_num)
 
     download_file(out_dem_file, 'out.dem')
 
@@ -152,6 +166,12 @@ async def download_demtext(event):
         io.BytesIO(text.encode('utf-8')),
         'out.txt'
     )
+
+
+async def showros_toggle_clicked(event):
+    checkbox = document.getElementById('changeViewEntity')
+    entity_num_box = document.getElementById('entityNumBox')
+    entity_num_box.style.display = 'none' if checkbox.checked else 'block'
 
 
 setup_logging()

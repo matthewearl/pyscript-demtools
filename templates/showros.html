@@ -3,7 +3,21 @@
   <p>1. Select the input .dem file:</p>
   <input type="file" id="demInput" accept=".dem" />
 
-  <p>2. Process and download output .dem file:</p>
+  <p>2. Choose the entity to fix.</p>
+  <p>
+    <label>
+      Player entity to fix is the view entity
+      <input checked py-click="showros_toggle_clicked" type="checkbox" id="changeViewEntity">
+    </label>
+  </p>
+  <p id="entityNumBox" style="display: none">
+    <label>
+      Entity number to fix:
+      <input type="number" id="entityNum" value="1">
+    </label>
+  </p>
+
+  <p>3. Process and download output .dem file:</p>
   <button py-click="run_showros">Run showros</button>
 
   <script type="py" src="./main.py" config="./pyscript.json"></script>
