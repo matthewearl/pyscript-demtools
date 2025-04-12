@@ -5,11 +5,11 @@ env = Environment(loader=FileSystemLoader("templates"))
 pages = [
     ("index.html", "index.html", None, None),
     ("superimpose.html", "superimpose.html", "superimpose",
-     "add players from other demos into a base demo"),
+     "Add players from other demos into a base demo."),
     ("showros.html", "showros.html", "showros",
-     "unhide players with Ring of Shadows"),
+     "Unhide players with Ring of Shadows."),
     ("demtext.html", "demtext.html", "demtext",
-     "generate a text file for a demo"),
+     "Generate a text file for a demo."),
 ]
 
 tools = [
