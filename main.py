@@ -103,9 +103,9 @@ def setup_logging():
 
 def catch_user_error(f):
     @functools.wraps(f)
-    def wrapped(*args, **kwargs):
+    async def wrapped(*args, **kwargs):
         try:
-            return f(*args, **kwargs)
+            return await f(*args, **kwargs)
         except UserError as e:
             logger.error("user error: %s", e.msg)
     return wrapped
@@ -142,7 +142,7 @@ async def run_showros(event):
         try:
             entity_num = int(entity_num_input.value)
         except ValueError:
-            raise UserError('Entity num must be an integer')
+            raise UserError('Entity num must be an integer') from None
         if entity_num <= 0:
             raise UserError('Entity num must be greater than zero')
 
